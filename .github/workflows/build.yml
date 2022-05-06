@@ -231,7 +231,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node: [8, 10, 12, 14, 16]
+        node: [8, 10, 12, 14, 16, 18]
     steps:
       - name: Check out current commit (${{ env.HEAD_COMMIT }})
         uses: actions/checkout@v2
@@ -270,7 +270,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node: [10, 12, 14, 16]
+        node: [10, 12, 14, 16, 18]
     steps:
       - name: Check out current commit (${{ env.HEAD_COMMIT }})
         uses: actions/checkout@v2
@@ -310,10 +310,10 @@ jobs:
         uses: actions/checkout@v2
         with:
           ref: ${{ env.HEAD_COMMIT }}
-        # TODO: removing `fetch-depth` below seems to have no effect, and the commit which added it had no description,
-        # so it's not clear why it's necessary. That said, right now ember tests are xfail, so it's a little hard to
-        # tell if it's safe to remove. Once ember tests are fixed, let's try again with it turned off, and if all goes
-        # well, we can pull it out.
+          # TODO: removing `fetch-depth` below seems to have no effect, and the commit which added it had no description,
+          # so it's not clear why it's necessary. That said, right now ember tests are xfail, so it's a little hard to
+          # tell if it's safe to remove. Once ember tests are fixed, let's try again with it turned off, and if all goes
+          # well, we can pull it out.
           fetch-depth: 0
       - name: Set up Node
         uses: actions/setup-node@v1
@@ -369,7 +369,7 @@ jobs:
       - name: Set up Node
         uses: actions/setup-node@v1
         with:
-          node-version: '16'
+          node-version: '18'
       - name: Check dependency cache
         uses: actions/cache@v2
         with:
@@ -468,7 +468,7 @@ jobs:
     continue-on-error: true
     strategy:
       matrix:
-        node: [10, 12, 14, 16]
+        node: [10, 12, 14, 16, 18]
     steps:
       - name: Check out current commit (${{ github.sha }})
         uses: actions/checkout@v2
@@ -503,7 +503,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node: [8, 10, 12, 14, 16]
+        node: [8, 10, 12, 14, 16, 18]
     steps:
       - name: Check out current commit (${{ env.HEAD_COMMIT }})
         uses: actions/checkout@v2
@@ -542,7 +542,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node: [10, 12, 14, 16]
+        node: [10, 12, 14, 16, 18]
     steps:
       - name: Check out current commit (${{ env.HEAD_COMMIT }})
         uses: actions/checkout@v2
@@ -583,10 +583,10 @@ jobs:
         uses: actions/checkout@v2
         with:
           ref: ${{ env.HEAD_COMMIT }}
-        # TODO: removing `fetch-depth` below seems to have no effect, and the commit which added it had no description,
-        # so it's not clear why it's necessary. That said, right now ember tests are xfail, so it's a little hard to
-        # tell if it's safe to remove. Once ember tests are fixed, let's try again with it turned off, and if all goes
-        # well, we can pull it out.
+          # TODO: removing `fetch-depth` below seems to have no effect, and the commit which added it had no description,
+          # so it's not clear why it's necessary. That said, right now ember tests are xfail, so it's a little hard to
+          # tell if it's safe to remove. Once ember tests are fixed, let's try again with it turned off, and if all goes
+          # well, we can pull it out.
           fetch-depth: 0
       - name: Set up Node
         uses: actions/setup-node@v1
@@ -640,7 +640,7 @@ jobs:
       - name: Set up Node
         uses: actions/setup-node@v1
         with:
-          node-version: '16'
+          node-version: '18'
       - name: Check dependency cache
         uses: actions/cache@v2
         with:
@@ -742,7 +742,7 @@ jobs:
     continue-on-error: true
     strategy:
       matrix:
-        node: [10, 12, 14, 16]
+        node: [10, 12, 14, 16, 18]
     steps:
       - name: Check out current commit (${{ github.sha }})
         uses: actions/checkout@v2
