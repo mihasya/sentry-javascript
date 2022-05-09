@@ -8,8 +8,9 @@ function run(cmd: string, options?: childProcess.ExecSyncOptions): unknown {
   return childProcess.execSync(cmd, { stdio: 'inherit', ...options });
 }
 
-const ignorePackages = process.version.startsWith('v8')
-  ? [
+function getIgnorePackages(): string[] {
+  if (process.version.startsWith('v8')) {
+    return [
       '@sentry/ember',
       '@sentry-internal/eslint-plugin-sdk',
       '@sentry/react',
@@ -18,8 +19,13 @@ const ignorePackages = process.version.startsWith('v8')
       '@sentry/serverless',
       '@sentry/nextjs',
       '@sentry/angular',
-    ]
-  : ['@sentry/serverless'];
+    ];
+  } else if (process.version.startsWith('v18')) {
+    return ['@sentry/angular', '@sentry/serverless'];
+  }
+
+  return ['@sentry/serverless'];
+}
 
 // clear current builds and rebuild with rollup/sucrase (this way, all of the extra, random stuff which gets built in
 // the main build job remains, and only the part affected by this project gets overwritten)
@@ -36,7 +42,11 @@ if (process.env.SUCRASE) {
   });
 
   // rebuild the packages we're going to test with rollup/sucrase
-  run(`yarn build:rollup ${ignorePackages.map(dep => `--ignore="${dep}"`).join(' ')}`);
+  run(
+    `yarn build:rollup ${getIgnorePackages()
+      .map(dep => `--ignore="${dep}"`)
+      .join(' ')}`,
+  );
 }
 // if we're in tsc-land, rebuild using es5 - temporary until switch to sucrase
 else {
@@ -45,5 +55,9 @@ else {
     baseTSConfigPath,
     String(fs.readFileSync(baseTSConfigPath)).replace('"target": "es6"', '"target": "es5"'),
   );
-  run(`yarn build:dev ${ignorePackages.map(dep => `--ignore="${dep}"`).join(' ')}`);
+  run(
+    `yarn build:dev ${getIgnorePackages()
+      .map(dep => `--ignore="${dep}"`)
+      .join(' ')}`,
+  );
 }
